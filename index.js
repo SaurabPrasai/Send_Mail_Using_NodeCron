@@ -59,7 +59,7 @@ app.use(session({
 app.use(authRouter)
 app.use(mailRouter)
 
-
+console.log(new Date());
 
 
 
