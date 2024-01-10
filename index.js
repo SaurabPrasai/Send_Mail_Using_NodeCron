@@ -72,6 +72,8 @@ const job = schedule.scheduleJob('* * * * *', async function(){
         if(data.length>0){
           taskTime=data[0].time; 
         }
+        console.log(new Date());
+        console.log(taskTime)
        //checking if the current time=tasktime
          if(taskTime==new Date()){
             mailOptions.subject=data[0].subject,
