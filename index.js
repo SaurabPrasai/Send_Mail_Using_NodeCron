@@ -10,6 +10,8 @@ const Gmail=require("./models/gmailSchema");
 const { transporter, mailOptions } = require("./config/mailConfig");
 const session=require("express-session");
 const mongoDbSession=require("connect-mongodb-session")(session);
+const moment = require('moment-timezone');
+
 
 
 
@@ -65,17 +67,18 @@ app.use(mailRouter)
 
 // cron.schedule
 const job = schedule.scheduleJob('* * * * *', async function(){
+    const serverTime=moment.tz('Asia/Kathmandu')
     try {
         //finding task with near time
         const data=await Gmail.find({}).sort({time:1})
-        let taskTime;
+        let taskTime
         if(data.length>0){
           taskTime=data[0].time; 
+          //converting the given time into local time
+        taskTime=moment(taskTime).tz('Asia/Kathmandu').format('YYYY-MM-DD HH:mm');
         }
-        console.log(new Date());
-        console.log(taskTime);
        //checking if the current time=tasktime
-         if(taskTime==new Date()){
+         if(taskTime==serverTime.format('YYYY-MM-DD HH:mm')){
             mailOptions.subject=data[0].subject,
             mailOptions.text=data[0].message
            const isSend=await transporter.sendMail(mailOptions)

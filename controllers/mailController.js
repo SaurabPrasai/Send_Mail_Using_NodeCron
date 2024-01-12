@@ -7,7 +7,7 @@ const Gmail=require("../models/gmailSchema");
     const {subject,message,time}=req.body;
       try {
 
-        const gmail=await Gmail.create({subject,message,time:new Date(time)});
+        const gmail=await Gmail.create({subject,message,time});
         if(gmail){
           return res.status(200).json({msg:"task created"})
         }
