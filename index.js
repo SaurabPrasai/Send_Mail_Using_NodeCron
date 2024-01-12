@@ -61,9 +61,6 @@ app.use(session({
 app.use(authRouter)
 app.use(mailRouter)
 
-console.log(new Date());
-
-
 
 // cron.schedule
 const job = schedule.scheduleJob('* * * * *', async function(){
@@ -77,8 +74,6 @@ const job = schedule.scheduleJob('* * * * *', async function(){
           //converting the given time into local time
         taskTime=moment(taskTime).tz('Asia/Kathmandu').format('YYYY-MM-DD HH:mm');
         }
-        console.log(new Date());
-        console.log(taskTime)
        //checking if the current time=tasktime
          if(taskTime==serverTime.format('YYYY-MM-DD HH:mm')){
             mailOptions.subject=data[0].subject,
